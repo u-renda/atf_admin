@@ -1,0 +1,161 @@
+/*
+ * GLOBAL
+ */
+@font-face {
+  font-family: 'Open Sans';
+  src: url('../fonts/OpenSans.woff2') format('woff2');
+}
+.right {
+    text-align: right;
+}
+.fullwidth {
+    width: 100%;
+}
+.floatleft {
+    float: left;
+}
+.maxwidth400 {
+    max-width: 400px;
+}
+.maxheight300 {
+    max-height: 300px;
+}
+.height150 {
+    height: 150px !important;
+}
+.height250 {
+    height: 250px !important;
+}
+.font16 {
+    font-size: 16px;
+}
+.font20 {
+    font-size: 20px;
+}
+.font40 {
+    font-size: 40px;
+}
+.fontblack {
+    color: #000000;
+}
+.fontred {
+    color: #ff0000;
+}
+.fontorange {
+    color: #f5ab35;
+}
+.fontblue {
+    color: #0000ff;
+}
+.fontwhite {
+    color: #ffffff;
+}
+.fontgreen {
+    color: #2ecc71;
+}
+.fontbold {
+	font-weight: bold;
+}
+.padding10 {
+    padding: 10px;
+}
+.paddinglr0 {
+    padding-left: 0;
+    padding-right: 0;
+}
+.paddinglr15 {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
+.paddingtop0 {
+    padding-top: 0;
+}
+.paddingright0 {
+    padding-right: 0;
+}
+.paddingright15 {
+    padding-right: 15px !important;
+}
+.paddingbottom0 {
+    padding-bottom: 0;
+}
+.paddingleft0 {
+    padding-left: 0;
+}
+.paddingleft15 {
+    padding-left: 15px;
+}
+.paddingbottom15 {
+    padding-bottom: 15px;
+}
+.margin15 {
+    margin: 15px;
+}
+.margintb10 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.margintb15 {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.marginlr0 {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+.marginlr15 {
+    margin-left: 15px !important;
+    margin-right: 15px !important;
+}
+.margintop10 {
+    margin-top: 10px;
+}
+.margintop15 {
+    margin-top: 15px;
+}
+.marginright20 {
+    margin-right: 20px !important;
+}
+.marginbottom0 {
+    margin-bottom: 0;
+}
+.marginbottom15 {
+    margin-bottom: 15px;
+}
+.bg-emerald {
+    background-color: #2ecc71;
+}
+.bg-peter-river {
+    background-color: #3498db;
+}
+.bg-alizarin {
+    background-color: #e74c3c;
+}
+.bg-concrete {
+    background-color: #95a5a6;
+}
+.bg-sun-flower {
+    background-color: #f1c40f;
+}
+.bg-wet-asphalt {
+    background-color: #34495e;
+}
+.bg-amethyst {
+    background-color: #9b59b6;
+}
+.hand-pointer {
+    cursor: pointer;
+}
+
+/*
+ * CUSTOM
+ */
+ul.nav-main > li.nav-active > a {
+    box-shadow: 2px 0 0 #0088CC inset;
+}
+.page-header h2 {
+    border-bottom-color: #0088CC;
+}
+html.no-overflowscrolling .nano > .nano-pane > .nano-slider {
+    background: #0088CC;
+}
