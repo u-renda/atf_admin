@@ -507,11 +507,13 @@ if(is_bool(LOCALHOST) || LOCALHOST == 'localhost')
 {
     define('API_HOST', 'http://localhost/atf_api/');
     define('IMAGE_HOST', 'http://localhost/atf_uploads/');
+    define('IMAGE_FOLDER', '../atf_uploads/');
 }
 else
 {
     define('API_HOST', 'http://actstofashion.com/api/');
     define('IMAGE_HOST', 'http://actstofashion.com/uploads/');
+    define('IMAGE_FOLDER', '../uploads/');
 }
 
 $config['atf_api'] = API_HOST;
@@ -583,4 +585,9 @@ $config['link_product_brand_update'] = $config['base_url'].'product_brand_update
 $config['code_admin_role'] = array(
     1 => 'administrator',
     2 => 'operator'
+);
+
+$config['code_member_gender'] = array(
+    0 => 'male',
+    1 => 'female'
 );

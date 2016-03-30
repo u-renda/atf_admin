@@ -17,7 +17,7 @@ class Movie extends CI_Controller {
 			if ($_FILES["photo"]["error"] == 0)
 			{
 				$name = md5(basename($_FILES["photo"]["name"]) . date('Y-m-d H:i:s'));
-				$target_dir = '../atf_uploads/';
+				$target_dir = IMAGE_FOLDER;
 				$imageFileType = strtolower(pathinfo($_FILES["photo"]["name"],PATHINFO_EXTENSION));
 				
 				$param2 = array();
@@ -60,12 +60,7 @@ class Movie extends CI_Controller {
 				$photo = '-';
 				if (isset($_FILES['photo']))
 				{
-					if ($_FILES["photo"]["error"] == 0)
-					{
-						$name = md5(basename($_FILES["photo"]["name"]) . date('Y-m-d H:i:s'));
-						$imageFileType = strtolower(pathinfo($_FILES["photo"]["name"],PATHINFO_EXTENSION));
-						$photo = IMAGE_HOST . $name . '.' . $imageFileType;
-					}
+					$photo = check_all_photos($_FILES['photo']);
 				}
 					
 				$param = array();
@@ -150,21 +145,14 @@ class Movie extends CI_Controller {
 				}
 				else
 				{
-					$photo = '-';
+					$param1 = array();
 					if (isset($_FILES['photo']))
 					{
-						if ($_FILES["photo"]["error"] == 0)
-						{
-							$name = md5(basename($_FILES["photo"]["name"]) . date('Y-m-d H:i:s'));
-							$imageFileType = strtolower(pathinfo($_FILES["photo"]["name"],PATHINFO_EXTENSION));
-							$photo = IMAGE_HOST . $name . '.' . $imageFileType;
-						}
+						$param1['photo'] = check_all_photos($_FILES['photo']);
 					}
 					
-					$param1 = array();
 					$param1['id_movie'] = $data['id'];
 					$param1['title'] = $this->input->post('title');
-					$param1['photo'] = $photo;
 					$query = $this->movie_model->update($param1);
 					
 					if ($query->code == 200)
@@ -227,10 +215,10 @@ class Movie extends CI_Controller {
 			
 			foreach ($get->result as $row)
 			{
-				$action = '<a title="View Detail" id="'.$row->id_movie.'" class="view '.$row->id_movie.'-view" href="#"><span class="glyphicon glyphicon-folder-open fontblue font16" aria-hidden="true"></span></a>&nbsp;
+				$action = '<a title="View Cast" href="movie_cast_lists?id_movie='.$row->id_movie.'"><i class="fa fa-users fontblue font16" aria-hidden="true"></i></a>&nbsp;
 							<a title="Edit" href="movie_edit?id='.$row->id_movie.'"><span class="glyphicon glyphicon-pencil fontorange font16" aria-hidden="true"></span></a>&nbsp;
 							<a title="Delete" id="'.$row->id_movie.'" class="delete '.$row->id_movie.'-delete" href="#"><span class="glyphicon glyphicon-remove fontred font16" aria-hidden="true"></span></a>&nbsp
-							<a title="Add Cast" href="movie_cast_create?id_movie='.$row->id_movie.'"><i class="fa fa-users text-success font16" aria-hidden="true"></i></a>';
+							<a title="Add Cast" href="movie_cast_create?id_movie='.$row->id_movie.'"><i class="fa fa-plus text-success font16" aria-hidden="true"></i></a>';
 				
 				$photo = '<img src="'.$row->photo.'" width="150">';
 				

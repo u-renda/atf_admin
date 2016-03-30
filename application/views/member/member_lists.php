@@ -27,5 +27,4 @@
 		</div>
 	</div>
 	<!-- end: page -->
-	<div class="clearfix"></div>
 </section>

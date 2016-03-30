@@ -10,7 +10,7 @@ if ( ! function_exists('check_all_photos'))
 		{
 			$name = md5(basename($param["name"]) . date('Y-m-d H:i:s'));
 			$imageFileType = strtolower(pathinfo($param["name"],PATHINFO_EXTENSION));
-			$photo = base_url() . 'uploads/' . $name . '.' . $imageFileType;
+			$photo = IMAGE_HOST . $name . '.' . $imageFileType;
 			return $photo;
 		}
     }

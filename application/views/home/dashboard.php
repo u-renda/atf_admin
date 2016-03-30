@@ -17,56 +17,58 @@
     <div class="row">
         <div class="col-md-6 col-lg-12 col-xl-6">
             <div class="row">
-                <div class="col-md-12 col-lg-6 col-xl-6">
+                <!-- Total Member -->
+                <div class="col-md-12 col-lg-4 col-xl-6">
                     <section class="panel panel-featured-left panel-featured-primary">
                         <div class="panel-body">
                             <div class="widget-summary">
                                 <div class="widget-summary-col widget-summary-col-icon">
                                     <div class="summary-icon bg-primary">
-                                        <i class="fa fa-life-ring"></i>
+                                        <i class="fa fa-users"></i>
                                     </div>
                                 </div>
                                 <div class="widget-summary-col">
                                     <div class="summary">
-                                        <h4 class="title">Support Questions</h4>
+                                        <h4 class="title">Total Member</h4>
                                         <div class="info">
-                                            <strong class="amount">1281</strong>
-                                            <span class="text-primary">(14 unread)</span>
+                                            <strong class="amount"><?php echo $total_member; ?></strong>
                                         </div>
                                     </div>
                                     <div class="summary-footer">
-                                        <a class="text-muted text-uppercase">(view all)</a>
+                                        <a class="text-muted text-uppercase hand-pointer" href="<?php echo $this->config->item('link_member_lists'); ?>">(view all)</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </section>
                 </div>
-                <div class="col-md-12 col-lg-6 col-xl-6">
+                <!-- Total Movie -->
+                <div class="col-md-12 col-lg-4 col-xl-6">
                     <section class="panel panel-featured-left panel-featured-secondary">
                         <div class="panel-body">
                             <div class="widget-summary">
                                 <div class="widget-summary-col widget-summary-col-icon">
                                     <div class="summary-icon bg-secondary">
-                                        <i class="fa fa-usd"></i>
+                                        <i class="fa fa-video-camera"></i>
                                     </div>
                                 </div>
                                 <div class="widget-summary-col">
                                     <div class="summary">
-                                        <h4 class="title">Total Profit</h4>
+                                        <h4 class="title">Total Movie</h4>
                                         <div class="info">
-                                            <strong class="amount">$ 14,890.30</strong>
+                                            <strong class="amount"><?php echo $total_movie; ?></strong>
                                         </div>
                                     </div>
                                     <div class="summary-footer">
-                                        <a class="text-muted text-uppercase">(withdraw)</a>
+                                        <a class="text-muted text-uppercase hand-pointer" href="<?php echo $this->config->item('link_movie_lists'); ?>">(view all)</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </section>
                 </div>
-                <div class="col-md-12 col-lg-6 col-xl-6">
+                <!-- Total Product -->
+                <div class="col-md-12 col-lg-4 col-xl-6">
                     <section class="panel panel-featured-left panel-featured-tertiary">
                         <div class="panel-body">
                             <div class="widget-summary">
@@ -77,37 +79,13 @@
                                 </div>
                                 <div class="widget-summary-col">
                                     <div class="summary">
-                                        <h4 class="title">Today's Orders</h4>
+                                        <h4 class="title">Total Product</h4>
                                         <div class="info">
-                                            <strong class="amount">38</strong>
+                                            <strong class="amount"><?php echo $total_product; ?></strong>
                                         </div>
                                     </div>
                                     <div class="summary-footer">
-                                        <a class="text-muted text-uppercase">(statement)</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-                <div class="col-md-12 col-lg-6 col-xl-6">
-                    <section class="panel panel-featured-left panel-featured-quartenary">
-                        <div class="panel-body">
-                            <div class="widget-summary">
-                                <div class="widget-summary-col widget-summary-col-icon">
-                                    <div class="summary-icon bg-quartenary">
-                                        <i class="fa fa-user"></i>
-                                    </div>
-                                </div>
-                                <div class="widget-summary-col">
-                                    <div class="summary">
-                                        <h4 class="title">Today's Visitors</h4>
-                                        <div class="info">
-                                            <strong class="amount">3765</strong>
-                                        </div>
-                                    </div>
-                                    <div class="summary-footer">
-                                        <a class="text-muted text-uppercase">(report)</a>
+                                        <a class="text-muted text-uppercase hand-pointer" href="<?php echo $this->config->item('link_product_lists'); ?>">(view all)</a>
                                     </div>
                                 </div>
                             </div>

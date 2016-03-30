@@ -5,9 +5,7 @@ class Member extends CI_Controller {
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model('kota_model');
 		$this->load->model('member_model');
-		$this->load->helper(array('image', 'member'));
 	}
 	
 	function check_email()
@@ -24,37 +22,6 @@ class Member extends CI_Controller {
 		else
 		{
 			return TRUE;
-		}
-	}
-	
-	function check_idcard_photo()
-	{
-		if (isset($_FILES['idcard_photo']))
-		{
-			if ($_FILES["idcard_photo"]["error"] == 0)
-			{
-				$name = md5(basename($_FILES["idcard_photo"]["name"]) . date('Y-m-d H:i:s'));
-				$target_dir = "uploads/";
-				$imageFileType = strtolower(pathinfo($_FILES["idcard_photo"]["name"],PATHINFO_EXTENSION));
-				
-				$param2 = array();
-				$param2['target_file'] = $target_dir . $name . '.' . $imageFileType;
-				$param2['imageFileType'] = $imageFileType;
-				$param2['tmp_name'] = $_FILES["idcard_photo"]["tmp_name"];
-				$param2['size'] = $_FILES["idcard_photo"]["size"];
-				
-				$check_image = check_image($param2);
-				
-				if ($check_image == 'true')
-				{
-					return TRUE;
-				}
-				else
-				{
-					$this->form_validation->set_message('check_idcard_photo', $check_image);
-					return FALSE;
-				}
-			}
 		}
 	}
 	
@@ -75,103 +42,19 @@ class Member extends CI_Controller {
 		}
 	}
 	
-	function check_phone_number()
-	{
-		$phone_number = $this->input->post('phone_number');
-		$phone_number_default = $this->input->post('phone_number_default');
-		$get = $this->member_model->info(array('phone_number' => $phone_number));
-		
-		if ($get->code == 200 && $phone_number != $phone_number_default)
-		{
-			$this->form_validation->set_message('check_phone_number', '%s already registered');
-			return FALSE;
-		}
-		else
-		{
-			return TRUE;
-		}
-	}
-	
-	function check_photo()
-	{
-		if (isset($_FILES['photo']))
-		{
-			if ($_FILES["photo"]["error"] == 0)
-			{
-				$name = md5(basename($_FILES["photo"]["name"]) . date('Y-m-d H:i:s'));
-				$target_dir = "uploads/";
-				$imageFileType = strtolower(pathinfo($_FILES["photo"]["name"],PATHINFO_EXTENSION));
-				
-				$param2 = array();
-				$param2['target_file'] = $target_dir . $name . '.' . $imageFileType;
-				$param2['imageFileType'] = $imageFileType;
-				$param2['tmp_name'] = $_FILES["photo"]["tmp_name"];
-				$param2['size'] = $_FILES["photo"]["size"];
-				
-				$check_image = check_image($param2);
-				
-				if ($check_image == 'true')
-				{
-					return TRUE;
-				}
-				else
-				{
-					$this->form_validation->set_message('check_photo', $check_image);
-					return FALSE;
-				}
-			}
-		}
-	}
-	
-	function check_username()
-	{
-		$username = strtolower($this->input->post('username'));
-		$username_default = strtolower($this->input->post('username_default'));
-		$get = $this->member_model->info(array('username' => $username));
-	
-		if ($get->code == 200 && $username != $username_default)
-		{
-			$this->form_validation->set_message('check_name', '%s already registered');
-			return FALSE;
-		}
-		else
-		{
-			return TRUE;
-		}
-	}
-	
 	function member_create()
 	{
 		$data = array();
-		$data['kota_lists'] = $this->kota_model->lists(array('limit' => 500))->result;
-		$data['code_member_idcard_type'] = $this->config->item('code_member_idcard_type');
-		$data['code_member_gender'] = $this->config->item('code_member_gender');
-		$data['code_member_marital_status'] = $this->config->item('code_member_marital_status');
-		$data['code_member_religion'] = $this->config->item('code_member_religion');
-		$data['code_member_shirt_size'] = $this->config->item('code_member_shirt_size');
 		$data['create_error'] = '';
 		
 		if ($this->input->post('submit'))
 		{
 			$this->load->library('form_validation');
-			$this->form_validation->set_rules('name', 'Name', 'required|callback_check_name');
-			$this->form_validation->set_rules('email', 'Email', 'required|valid_email|callback_check_email');
-			$this->form_validation->set_rules('idcard_type', 'ID Type', 'required');
-			$this->form_validation->set_rules('idcard_number', 'ID Number', 'required');
-			$this->form_validation->set_rules('idcard_address', 'ID Address', 'required');
-			$this->form_validation->set_rules('shipment_address', 'Shipment Address', 'required');
-			$this->form_validation->set_rules('postal_code', 'Postal Code', 'required');
-			$this->form_validation->set_rules('id_kota', 'Kota', 'required');
-			$this->form_validation->set_rules('gender', 'Gender', 'required');
-			$this->form_validation->set_rules('phone_number', 'Phone Number', 'required|callback_check_phone_number');
-			$this->form_validation->set_rules('birth_place', 'Birth Place', 'required');
-			$this->form_validation->set_rules('birth_date', 'Birth Date', 'required');
-			$this->form_validation->set_rules('marital_status', 'Marital Status', 'required');
-			$this->form_validation->set_rules('occupation', 'Occupation', 'required');
-			$this->form_validation->set_rules('religion', 'Religion', 'required');
-			$this->form_validation->set_rules('shirt_size', 'Shirt Size', 'required');
-			$this->form_validation->set_rules('idcard_photo', 'ID Photo', 'callback_check_idcard_photo');
-			$this->form_validation->set_rules('photo', 'Photo', 'callback_check_photo');
+			$this->form_validation->set_rules('name', 'name', 'required');
+			$this->form_validation->set_rules('email', 'email', 'required');
+			$this->form_validation->set_rules('password', 'password', 'required');
+			$this->form_validation->set_rules('gender', 'gender', 'required');
+			$this->form_validation->set_rules('birthday', 'birthday', 'required');
 			
 			if ($this->form_validation->run() == FALSE)
 			{
@@ -179,89 +62,26 @@ class Member extends CI_Controller {
 			}
 			else
 			{
-				if (isset($_FILES['idcard_photo']))
+				$param = array();
+				$param['name'] = $this->input->post('name');
+				$param['email'] = $this->input->post('email');
+				$param['password'] = $this->input->post('password');
+				$param['gender'] = $this->input->post('gender');
+				$param['birthday'] = $this->input->post('birthday');
+				$query = $this->member_model->create($param);
+				
+				if ($query->code == 200)
 				{
-					$idcard_photo = check_all_photos($_FILES['idcard_photo']);
+					redirect($this->config->item('link_member_lists'));
 				}
 				else
 				{
-					$idcard_photo = '-';
-				}
-				
-				if (isset($_FILES['photo']))
-				{
-					$photo = check_all_photos($_FILES['photo']);
-				}
-				else
-				{
-					$photo = '-';
-				}
-				
-				$get_member_number = $this->member_model->lists(array('order' => 'member_number', 'sort' => 'desc'));
-				
-				if ($get_member_number->code == 200)
-				{
-					$last_number = $get_member_number->result[0]->member_number;
-					$next_number = $last_number + 1;
-					$explode_birth_date = explode('-', $this->input->post('birth_date'));
-					$month = $explode_birth_date[1];
-					$year = substr($explode_birth_date[0], -2);
-					$admin_initial = $this->session->userdata('initial');
-					$this_year = date('y');
-					$explode_name = explode(' ', strtolower($this->input->post('name')));
-					
-					if ($this->input->post('gender') == 0)
-					{
-						$gender = 'M';
-					}
-					else
-					{
-						$gender = 'F';
-					}
-					
-					$member_number = str_pad($next_number, 5, "0", STR_PAD_LEFT);
-					$member_card = $month.$year.$gender."W".$admin_initial.$this_year.$member_number;
-					$username = $explode_name[0].$explode_birth_date[2].$month;
-					
-					$param = array();
-					$param['name'] = $this->input->post('name');
-					$param['email'] = $this->input->post('email');
-					$param['idcard_type'] = $this->input->post('idcard_type');
-					$param['idcard_number'] = $this->input->post('idcard_number');
-					$param['idcard_address'] = $this->input->post('idcard_address');
-					$param['shipment_address'] = $this->input->post('shipment_address');
-					$param['postal_code'] = $this->input->post('postal_code');
-					$param['id_kota'] = $this->input->post('id_kota');
-					$param['gender'] = $this->input->post('gender');
-					$param['phone_number'] = $this->input->post('phone_number');
-					$param['birth_place'] = $this->input->post('birth_place');
-					$param['birth_date'] = date('Y-m-d', strtotime($this->input->post('birth_date')));
-					$param['marital_status'] = $this->input->post('marital_status');
-					$param['occupation'] = $this->input->post('occupation');
-					$param['religion'] = $this->input->post('religion');
-					$param['shirt_size'] = $this->input->post('shirt_size');
-					$param['idcard_photo'] = $idcard_photo;
-					$param['photo'] = $photo;
-					$param['status'] = 4;
-					$param['member_number'] = $member_number;
-					$param['member_card'] = $member_card;
-					$param['username'] = $username;
-					$param['password'] = $username;
-					$param['approved_date'] = date('Y-m-d H:i:s');
-					$query = $this->member_model->create($param);
-					
-					if ($query->code == 200)
-					{
-						redirect('member_lists');
-					}
-					else
-					{
-						$data['create_error'] = $query->result;
-					}
+					$data['create_error'] = $query->result;
 				}
 			}
 		}
 		
+		$data['code_member_gender'] = $this->config->item('code_member_gender');
 		$data['frame_content'] = 'member/member_create';
 		$this->load->view('templates/frame', $data);
 	}
@@ -418,10 +238,9 @@ class Member extends CI_Controller {
 		$pageSize = $this->input->post('pageSize') ? $this->input->post('pageSize') : 20;
 		$offset = ($page - 1) * $pageSize;
 		$i = $offset * 1 + 1;
-		$order = 'member_number';
-		$sort = 'desc';
+		$order = 'name';
+		$sort = 'asc';
 		$q = '';
-		$status = $this->input->post('status');
 		
 		if ($this->input->post('sort'))
 		{
@@ -441,8 +260,8 @@ class Member extends CI_Controller {
 			}
 		}
 		
-        $get = $this->member_model->lists(array('q' => $q, 'status' => $status, 'limit' => $pageSize, 'offset' => $offset, 'order' => $order, 'sort' => $sort));
-		$jsonData = array('total' => 0, 'results' => array());
+        $get = $this->member_model->lists(array('q' => $q, 'limit' => $pageSize, 'offset' => $offset, 'order' => $order, 'sort' => $sort));
+		$jsonData = array('data' => array(), 'total' => 0);
 		
 		if ($get->code == 200)
 		{
@@ -450,24 +269,21 @@ class Member extends CI_Controller {
 			
 			foreach ($get->result as $row)
 			{
-				$code_member_status = $this->config->item('code_member_status');
-				$code_member_shirt_size = $this->config->item('code_member_shirt_size');
-				
 				$action = '<a title="View Detail" id="'.$row->id_member.'" class="view '.$row->id_member.'-view" href="#"><span class="glyphicon glyphicon-folder-open fontblue font16" aria-hidden="true"></span></a>&nbsp;
 							<a title="Edit" href="member_edit?id='.$row->id_member.'"><span class="glyphicon glyphicon-pencil fontorange font16" aria-hidden="true"></span></a>&nbsp;
+							<a title="Product Loved" href="member_love_lists?id_member='.$row->id_member.'"><i class="fa fa-heart fontpink font16"></i></a>&nbsp;
+							<a title="Wishlists" href="member_wishlists_lists?id_member='.$row->id_member.'"><i class="fa fa-list fontblack font16"></i></a>&nbsp;
 							<a title="Delete" id="'.$row->id_member.'" class="delete '.$row->id_member.'-delete" href="#"><span class="glyphicon glyphicon-remove fontred font16" aria-hidden="true"></span></a>';
 				
 				$entry = array(
-					'no' => $i,
-					'name' => ucwords($row->name),
-					'email' => strtolower($row->email),
-					'member_card' => strtoupper($row->member_card),
-					'shirt_size' => strtoupper($code_member_shirt_size[$row->shirt_size]),
-					'status' => $code_member_status[$row->status],
-					'action' => $action
+					'No' => $i,
+					'Name' => ucwords($row->name),
+					'Email' => strtolower($row->email),
+					'Gender' => $row->gender,
+					'Action' => $action
 				);
 				
-				$jsonData['results'][] = $entry;
+				$jsonData['data'][] = $entry;
 				$i++;
 			}
 		}
@@ -478,7 +294,6 @@ class Member extends CI_Controller {
 	function member_lists()
 	{
 		$data = array();
-		$data['code_member_status'] = $this->config->item('code_member_status');
 		$data['frame_content'] = 'member/member_lists';
 		$this->load->view('templates/frame', $data);
 	}

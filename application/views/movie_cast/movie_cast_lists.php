@@ -22,6 +22,25 @@
 					<h3 class="panel-title">Movie Cast - Lists</h3>
 				</header>
 				<div class="panel-body">
+					<form class="row marginbottom15" id="form-movie-cast-lists">
+						<div class="form-group col-sm-3">
+							<select class="form-control" name="id_movie" id="id_movie">
+								<option value="">-- All Movie --</option>
+								<?php
+								foreach ($movie_lists as $row)
+								{
+									echo '<option value="'.$row->id_movie.'"';
+									if ($row->id_movie == $id_movie)
+									{
+										echo 'selected="selected"';
+									}
+									echo '>'.ucwords($row->title).'</option>';
+								} ?>
+							</select>
+						</div>
+						<input type="submit" class="btn btn-primary" value="Submit" />
+					</form>
+					<div class="clearfix"></div>
 					<div id="grid_movie_cast_lists"></div>
 				</div>
 			</div>

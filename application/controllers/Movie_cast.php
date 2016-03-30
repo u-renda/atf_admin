@@ -18,7 +18,7 @@ class Movie_cast extends CI_Controller {
 			if ($_FILES["photo"]["error"] == 0)
 			{
 				$name = md5(basename($_FILES["photo"]["name"]) . date('Y-m-d H:i:s'));
-				$target_dir = '../atf_uploads/';
+				$target_dir = IMAGE_FOLDER;
 				$imageFileType = strtolower(pathinfo($_FILES["photo"]["name"],PATHINFO_EXTENSION));
 				
 				$param2 = array();
@@ -211,14 +211,15 @@ class Movie_cast extends CI_Controller {
 		$order = 'name';
 		$sort = 'asc';
 		$q = '';
+		$id_movie = $this->input->post('id_movie') ? $this->input->post('id_movie') : '';
 		
-		if ($this->input->post('sort'))
+		if ($this->input->post('sort') == TRUE)
 		{
 			$order = $_POST['sort'][0]['field'];
 			$sort = $_POST['sort'][0]['dir'];
 		}
 		
-		if ($this->input->post('filter'))
+		if ($this->input->post('filter') == TRUE)
 		{
 			if (empty($_POST['filter']['filters']))
 			{
@@ -230,7 +231,7 @@ class Movie_cast extends CI_Controller {
 			}
 		}
 		
-        $get = $this->movie_cast_model->lists(array('q' => $q, 'limit' => $pageSize, 'offset' => $offset, 'order' => $order, 'sort' => $sort));
+        $get = $this->movie_cast_model->lists(array('id_movie' => $id_movie, 'q' => $q, 'limit' => $pageSize, 'offset' => $offset, 'order' => $order, 'sort' => $sort));
 		$jsonData = array('data' => array(), 'total' => 0);
 		
 		if ($get->code == 200)
@@ -269,6 +270,15 @@ class Movie_cast extends CI_Controller {
 	function movie_cast_lists()
 	{
 		$data = array();
+		$data['id_movie'] = $this->input->get_post('id_movie');
+		
+		$query = $this->movie_model->lists(array());
+		
+		if ($query->code == 200)
+		{
+			$data['movie_lists'] = $query->result;
+		}
+		
 		$data['frame_content'] = 'movie_cast/movie_cast_lists';
 		$this->load->view('templates/frame', $data);
 	}

@@ -21,7 +21,7 @@ class Product extends CI_Controller {
 			if ($_FILES["photo"]["error"] == 0)
 			{
 				$name = md5(basename($_FILES["photo"]["name"]) . date('Y-m-d H:i:s'));
-				$target_dir = '../atf_uploads/';
+				$target_dir = IMAGE_FOLDER;
 				$imageFileType = strtolower(pathinfo($_FILES["photo"]["name"],PATHINFO_EXTENSION));
 				
 				$param2 = array();

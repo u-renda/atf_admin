@@ -1,4 +1,6 @@
 $(function () {
+    resubmit_movie_cast();
+    
     // Admin Lists
     $("#grid_admin_lists").kendoGrid({
         dataSource: {
@@ -82,49 +84,7 @@ $(function () {
         ]
     });
     
-    // Movie Cast Lists
-    $("#grid_movie_cast_lists").kendoGrid({
-        dataSource: {
-            transport: {
-                read: {
-                    url: newPathname + "movie_cast_get",
-                    dataType: "json"
-                }
-            },
-            schema: {
-                data: "data",
-                total: "total"
-            },
-            pageSize: 20
-        },
-        sortable: true,
-        pageable: {
-            refresh: true,
-            pageSizes: true,
-            buttonCount: 5
-        },
-        columns: [
-            {
-                field: "No",
-                width: 40,
-                sortable: false
-            }, {
-                field: "Actor",
-                title: "Cast (Actor Name)",
-                template: "#= data.Actor #"
-            }, {
-                field: "Movie"
-            }, {
-                field: "Photo",
-                template: "#= data.Photo #"
-            }, {
-                field: "Action",
-                template: "#= data.Action #",
-                width: 100,
-                sortable: false
-            }
-        ]
-    });
+    
     
     // Product Lists
     $("#grid_product_lists").kendoGrid({
@@ -248,4 +208,102 @@ $(function () {
             }
         ]
     });
+    
+    // Member Lists
+    $("#grid_member_lists").kendoGrid({
+        dataSource: {
+            transport: {
+                read: {
+                    url: newPathname + "member_get",
+                    dataType: "json"
+                }
+            },
+            schema: {
+                data: "data",
+                total: "total"
+            },
+            pageSize: 20
+        },
+        sortable: true,
+        pageable: {
+            refresh: true,
+            pageSizes: true,
+            buttonCount: 5
+        },
+        columns: [
+            {
+                field: "No",
+                width: 40,
+                sortable: false
+            }, {
+                field: "Name"
+            }, {
+                field: "Email"
+            }, {
+                field: "Gender"
+            }, {
+                field: "Action",
+                template: "#= data.Action #",
+                width: 150,
+                sortable: false
+            }
+        ]
+    });
+});
+
+// Movie Cast Lists
+function resubmit_movie_cast() {
+    $("#grid_movie_cast_lists").kendoGrid({
+        dataSource: {
+            transport: {
+                read: {
+                    url: newPathname + "movie_cast_get",
+                    dataType: "json",
+                    type: "POST",
+					data: {
+                        id_movie : $('#id_movie').val()
+					}
+                }
+            },
+            schema: {
+                data: "data",
+                total: "total"
+            },
+            pageSize: 20
+        },
+        sortable: true,
+        pageable: {
+            refresh: true,
+            pageSizes: true,
+            buttonCount: 5
+        },
+        columns: [
+            {
+                field: "No",
+                width: 40,
+                sortable: false
+            }, {
+                field: "Actor",
+                title: "Cast (Actor Name)",
+                template: "#= data.Actor #"
+            }, {
+                field: "Movie"
+            }, {
+                field: "Photo",
+                template: "#= data.Photo #"
+            }, {
+                field: "Action",
+                template: "#= data.Action #",
+                width: 100,
+                sortable: false
+            }
+        ]
+    });
+}
+
+$('#form-movie-cast-lists').submit(function (){
+    resubmit_movie_cast();
+    $('#grid_movie_cast_lists').data('kendoGrid').dataSource.read();
+    $('#grid_movie_cast_lists').data('kendoGrid').refresh();
+    return false;
 });

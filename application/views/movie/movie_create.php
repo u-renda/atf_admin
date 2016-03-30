@@ -22,7 +22,7 @@
                 </header>
                 <form role="form" action="<?php echo $this->config->item('link_movie_create'); ?>" method="post" id="movie-create" enctype="multipart/form-data">
                     <div class="panel-body">
-                        <div class="form-body">
+                        <div class="form-body col-sm-6">
                             <div class="fontred"><?php if ($create_error) { print_r($create_error); } ?></div>
                             <div class="form-group">
                                 <label>Title</label><span class="fontred"> *</span>
