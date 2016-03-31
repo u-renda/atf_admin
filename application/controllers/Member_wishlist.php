@@ -1,0 +1,141 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Member_wishlist extends CI_Controller {
+	
+	function __construct()
+	{
+		parent::__construct();
+		$this->load->model('member_wishlist_model');
+		$this->load->model('member_model');
+		$this->load->model('product_model');
+	}
+	
+	function member_wishlist_delete()
+	{
+		$data = array();
+		$data['id'] = $this->input->post('id');
+		$data['action'] = $this->input->post('action');
+		
+		$get = $this->member_wishlist_model->info(array('id_member_wishlist' => $data['id']));
+		
+		if ($get->code == 200)
+		{
+			if ($this->input->post('delete'))
+			{
+				$param1 = array();
+				$param1['id_member_wishlist'] = $data['id'];
+				$query = $this->member_wishlist_model->delete($param1);
+				
+				if ($query)
+				{
+					$response =  array('msg' => 'Delete data success', 'type' => 'success');
+				}
+				else
+				{
+					$response =  array('msg' => 'Delete data failed', 'type' => 'error');
+				}
+				
+				echo json_encode($response);
+				exit();
+			}
+			else
+			{
+				$this->load->view('delete_confirm', $data);
+			}
+		}
+		else
+		{
+			echo "Data Not Found";
+		}
+	}
+	
+	function member_wishlist_get()
+	{
+		$page = $this->input->post('page') ? $this->input->post('page') : 1;
+		$pageSize = $this->input->post('pageSize') ? $this->input->post('pageSize') : 20;
+		$offset = ($page - 1) * $pageSize;
+		$i = $offset * 1 + 1;
+		$order = 'name';
+		$sort = 'asc';
+		$q = '';
+		$id_member = $this->input->get_post('id_member') ? $this->input->get_post('id_member') : '';
+		$id_product = $this->input->get_post('id_product') ? $this->input->get_post('id_product') : '';
+		
+		if ($this->input->post('sort'))
+		{
+			$order = $_POST['sort'][0]['field'];
+			$sort = $_POST['sort'][0]['dir'];
+		}
+		
+		if ($this->input->post('filter'))
+		{
+			if (empty($_POST['filter']['filters']))
+			{
+				$q = $this->input->post('filter');
+			}
+			else
+			{
+				$q = $_POST['filter']['filters'][0]['value'];
+			}
+		}
+		
+        $get = $this->member_wishlist_model->lists(array('id_product' => $id_product, 'id_member' => $id_member, 'q' => $q, 'limit' => $pageSize, 'offset' => $offset, 'order' => $order, 'sort' => $sort));
+		$jsonData = array('data' => array(), 'total' => 0);
+		
+		if ($get->code == 200)
+		{
+			$jsonData['total'] = $get->total;
+			
+			foreach ($get->result as $row)
+			{
+				$action = '<a title="Delete" id="'.$row->id_member_wishlist.'" class="delete '.$row->id_member_wishlist.'-delete" href="#"><span class="glyphicon glyphicon-remove fontred font16" aria-hidden="true"></span></a>';
+				
+				$entry = array(
+					'No' => $i,
+					'MemberName' => ucwords($row->member->name),
+					'ProductName' => ucwords($row->product->name),
+					'Action' => $action
+				);
+				
+				$jsonData['data'][] = $entry;
+				$i++;
+			}
+		}
+		
+		echo json_encode($jsonData);
+	}
+	
+	function member_wishlist_lists()
+	{
+		$data = array();
+		$data['id_member'] = $this->input->get_post('id_member');
+		$data['id_product'] = $this->input->get_post('id_product');
+		
+		if ($data['id_member'] == FALSE && $data['id_product'] == FALSE)
+		{
+			redirect($this->config->item('link_dashboard'));
+		}
+		
+		$query = $this->member_model->info(array('id_member' => $data['id_member']));
+		$query2 = $this->product_model->info(array('id_product' => $data['id_product']));
+		
+		if ($query->code == 200)
+		{
+			$data['member'] = $query->result;
+		}
+		
+		if ($query2->code == 200)
+		{
+			$data['product'] = $query2->result;
+		}
+		
+		$data['back_button'] = $this->config->item('link_member_lists');
+		if ($data['id_product'] == TRUE)
+		{
+			$data['back_button'] = $this->config->item('link_product_lists');
+		}
+		
+		$data['frame_content'] = 'member_wishlist/member_wishlist_lists';
+		$this->load->view('templates/frame', $data);
+	}
+}

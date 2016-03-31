@@ -19,5 +19,17 @@ var newPathname = winOrigin + "/" + winPath[1] + "/";
 			$(this).addClass('nav-active');
         }
     });
+	
+	if (document.getElementById('page_member_love_lists') != null) {
+		$('li#grand-member').addClass('nav-active');
+	}
+	
+	if (document.getElementById('page_member_wishlist_lists') != null) {
+		$('li#grand-member').addClass('nav-active');
+	}
+	
+	if (document.getElementById('page_member_edit') != null) {
+		$('li#grand-member').addClass('nav-active');
+	}
 
 }).apply(this, [jQuery]);

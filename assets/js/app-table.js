@@ -34,9 +34,6 @@ $(function () {
             }, {
                 field: "Username"
             }, {
-                field: "AdminRole",
-                title: "Admin Role"
-            }, {
                 field: "Action",
                 template: "#= data.Action #",
                 sortable: false
@@ -84,8 +81,6 @@ $(function () {
         ]
     });
     
-    
-    
     // Product Lists
     $("#grid_product_lists").kendoGrid({
         dataSource: {
@@ -129,7 +124,7 @@ $(function () {
             }, {
                 field: "Action",
                 template: "#= data.Action #",
-                width: 100,
+                width: 150,
                 sortable: false
             }
         ]
@@ -240,7 +235,101 @@ $(function () {
             }, {
                 field: "Email"
             }, {
-                field: "Gender"
+                field: "Gender",
+                width: 100
+            }, {
+                field: "Birthday",
+                width: 100
+            }, {
+                field: "Action",
+                template: "#= data.Action #",
+                width: 150,
+                sortable: false
+            }
+        ]
+    });
+    
+    // Member Love Lists
+    $("#grid_member_love_lists").kendoGrid({
+        dataSource: {
+            transport: {
+                read: {
+                    url: newPathname + "member_love_get",
+                    dataType: "json",
+                    data: {
+                        id_member : $('#id_member').val(),
+                        id_product : $('#id_product').val()
+					}
+                }
+            },
+            schema: {
+                data: "data",
+                total: "total"
+            },
+            pageSize: 20
+        },
+        sortable: true,
+        pageable: {
+            refresh: true,
+            pageSizes: true,
+            buttonCount: 5
+        },
+        columns: [
+            {
+                field: "No",
+                width: 40,
+                sortable: false
+            }, {
+                field: "MemberName",
+                title: "Member Name"
+            }, {
+                field: "ProductName",
+                title: "Product Name"
+            }, {
+                field: "Action",
+                template: "#= data.Action #",
+                width: 150,
+                sortable: false
+            }
+        ]
+    });
+    
+    // Member Wishlist Lists
+    $("#grid_member_wishlist_lists").kendoGrid({
+        dataSource: {
+            transport: {
+                read: {
+                    url: newPathname + "member_wishlist_get",
+                    dataType: "json",
+                    data: {
+                        id_member : $('#id_member').val(),
+                        id_product : $('#id_product').val()
+					}
+                }
+            },
+            schema: {
+                data: "data",
+                total: "total"
+            },
+            pageSize: 20
+        },
+        sortable: true,
+        pageable: {
+            refresh: true,
+            pageSizes: true,
+            buttonCount: 5
+        },
+        columns: [
+            {
+                field: "No",
+                width: 40,
+                sortable: false
+            }, {
+                field: "MemberName",
+                title: "Member Name"
+            }, {
+                field: "ProductName",
+                title: "Product Name"
             }, {
                 field: "Action",
                 template: "#= data.Action #",

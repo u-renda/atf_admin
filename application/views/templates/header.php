@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="<?php echo base_url('assets/css/theme').'/magnific-popup.css'; ?>" />
     <link rel="stylesheet" href="<?php echo base_url('assets/css/theme').'/datepicker3.css'; ?>" />
     <link rel="stylesheet" href="<?php echo base_url('assets/css/theme').'/bootstrap-fileupload.min.css'; ?>" />
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/theme').'/pnotify.custom.css'; ?>" />
     <!-- Theme CSS -->
     <link rel="stylesheet" href="<?php echo base_url('assets/css/theme').'/theme.css'; ?>" />
     <link rel="stylesheet" href="<?php echo base_url('assets/css/theme').'/default.css'; ?>" />

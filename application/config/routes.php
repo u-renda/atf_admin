@@ -53,10 +53,16 @@ $route['default_controller'] = 'login';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-$route['login'] = 'login/index';
-$route['logout'] = 'login/logout';
+$route['admin_create'] = 'admin/admin_create';
+$route['admin_delete'] = 'admin/admin_delete';
+$route['admin_edit'] = 'admin/admin_edit';
+$route['admin_get'] = 'admin/admin_get';
+$route['admin_lists'] = 'admin/admin_lists';
 
 $route['dashboard'] = 'home/dashboard';
+
+$route['login'] = 'login/index';
+$route['logout'] = 'login/logout';
 
 $route['member_create'] = 'member/member_create';
 $route['member_delete'] = 'member/member_delete';
@@ -64,11 +70,13 @@ $route['member_edit'] = 'member/member_edit';
 $route['member_get'] = 'member/member_get';
 $route['member_lists'] = 'member/member_lists';
 
-$route['admin_create'] = 'admin/admin_create';
-$route['admin_delete'] = 'admin/admin_delete';
-$route['admin_edit'] = 'admin/admin_edit';
-$route['admin_get'] = 'admin/admin_get';
-$route['admin_lists'] = 'admin/admin_lists';
+$route['member_love_delete'] = 'member_love/member_love_delete';
+$route['member_love_get'] = 'member_love/member_love_get';
+$route['member_love_lists'] = 'member_love/member_love_lists';
+
+$route['member_wishlist_delete'] = 'member_wishlist/member_wishlist_delete';
+$route['member_wishlist_get'] = 'member_wishlist/member_wishlist_get';
+$route['member_wishlist_lists'] = 'member_wishlist/member_wishlist_lists';
 
 $route['movie_create'] = 'movie/movie_create';
 $route['movie_delete'] = 'movie/movie_delete';

@@ -16,12 +16,12 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="panel panel-featured">
-                <div class="panel-heading">
+                <header class="panel-heading">
                     <h3 class="panel-title">Admin - Create New</h3>
-                </div>
-                <div class="panel-body">
-                    <form role="form" action="<?php echo $this->config->item('link_admin_create'); ?>" method="post" enctype="multipart/form-data">
-                        <div class="form-body">
+                </header>
+                <form role="form" action="<?php echo $this->config->item('link_admin_create'); ?>" method="post" enctype="multipart/form-data">
+                    <div class="panel-body">
+                        <div class="form-body col-sm-6">
                             <div class="fontred"><?php if ($create_error) { print_r($create_error); } ?></div>
                             <div class="form-group">
                                 <label class="control-label">Name</label><span class="fontred"> *</span>
@@ -52,27 +52,38 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>Admin Role</label><span class="fontred"> *</span>
+                                <label class="control-label">Photo</label>
                                 <div class="input-group col-sm-12">
-                                    <input type="text" class="form-control" name="admin_role" id="admin_role" value="<?php echo set_value('admin_role'); ?>">
-                                    <?php echo form_error('admin_role', '<div class="fontred">', '</div>'); ?>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Photo</label>
-                                <div class="input-group col-sm-12">
-                                    <input type="file" class="form-control" name="photo" id="photo">
+                                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                                        <div class="input-append">
+                                            <div class="uneditable-input">
+                                                <i class="fa fa-file fileupload-exists"></i>
+                                                <span class="fileupload-preview"></span>
+                                            </div>
+                                            <span class="btn btn-default btn-file">
+                                                <span class="fileupload-exists">Change</span>
+                                                <span class="fileupload-new">Select file</span>
+                                                <input type="file" name="photo" id="photo" />
+                                            </span>
+                                            <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remove</a>
+                                        </div>
+                                    </div>
                                     <?php echo form_error('photo', '<div class="fontred">', '</div>'); ?>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-actions">
-                            <button type="submit" name="submit" value="Submit" class="btn blue">
-                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Create New
-                            </button>
+                    </div>
+                    <footer class="panel-footer">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <button type="submit" name="submit" value="Submit" class="btn btn-primary">
+                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Create New
+                                </button>
+                                <button type="reset" class="btn btn-default">Reset</button>
+                            </div>
                         </div>
-                    </form>
-                </div>
+                    </footer>
+                </form>
             </div>
         </div>
     </div>

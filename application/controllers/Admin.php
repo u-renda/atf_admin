@@ -50,7 +50,7 @@ class Admin extends CI_Controller {
 			if ($_FILES["photo"]["error"] == 0)
 			{
 				$name = md5(basename($_FILES["photo"]["name"]) . date('Y-m-d H:i:s'));
-				$target_dir = IMAGE_HOST;
+				$target_dir = IMAGE_FOLDER;
 				$imageFileType = strtolower(pathinfo($_FILES["photo"]["name"],PATHINFO_EXTENSION));
 				
 				$param2 = array();
@@ -58,7 +58,6 @@ class Admin extends CI_Controller {
 				$param2['imageFileType'] = $imageFileType;
 				$param2['tmp_name'] = $_FILES["photo"]["tmp_name"];
 				$param2['size'] = $_FILES["photo"]["size"];
-				
 				$check_image = check_image($param2);
 				
 				if ($check_image == 'true')
@@ -99,11 +98,11 @@ class Admin extends CI_Controller {
 		if ($this->input->post('submit'))
 		{
 			$this->load->library('form_validation');
-			$this->form_validation->set_rules('username', 'Username', 'required|callback_check_username');
-			$this->form_validation->set_rules('password', 'Password', 'required');
-			$this->form_validation->set_rules('name', 'Name', 'required|callback_check_name');
-			$this->form_validation->set_rules('email', 'Email', 'required|valid_email|callback_check_email');
-			$this->form_validation->set_rules('photo', 'Photo', 'callback_check_photo');
+			$this->form_validation->set_rules('username', 'username', 'required');
+			$this->form_validation->set_rules('password', 'password', 'required');
+			$this->form_validation->set_rules('name', 'name', 'required|callback_check_name');
+			$this->form_validation->set_rules('email', 'email', 'required|valid_email|callback_check_email');
+			$this->form_validation->set_rules('photo', 'photo', 'callback_check_photo');
 			
 			if ($this->form_validation->run() == FALSE)
 			{
@@ -126,13 +125,12 @@ class Admin extends CI_Controller {
 				$param['name'] = $this->input->post('name');
 				$param['email'] = $this->input->post('email');
 				$param['admin_role'] = 1;
-				$param['admin_initial'] = $this->input->post('admin_initial');
 				$param['photo'] = $photo;
 				$query = $this->admin_model->create($param);
 				
 				if ($query->code == 200)
 				{
-					redirect('admin_lists');
+					redirect($this->config->item('link_admin_lists'));
 				}
 				else
 				{
@@ -209,27 +207,26 @@ class Admin extends CI_Controller {
 				}
 				else
 				{
-					if (isset($_FILES['photo']) && $_FILES['photo']['error'] != 4)
+					$param1 = array();
+					if (isset($_FILES['photo']))
 					{
-						$photo = check_all_photos($_FILES['photo']);
-					}
-					else
-					{
-						$photo = $info->result->photo;
+						$param1['photo'] = check_all_photos($_FILES['photo']);
 					}
 					
-					$param1 = array();
+					if ($this->input->post('password') != '')
+					{
+						$param1['password'] = $this->input->post('password');
+					}
+					
 					$param1['id_admin'] = $data['id'];
 					$param1['username'] = $this->input->post('username');
 					$param1['name'] = $this->input->post('name');
 					$param1['email'] = $this->input->post('email');
-					$param1['admin_initial'] = $this->input->post('admin_initial');
-					$param1['photo'] = $photo;
 					$query = $this->admin_model->update($param1);
 					
 					if ($query->code == 200)
 					{
-						redirect('admin_lists');
+						redirect($this->config->item('link_admin_lists'));
 					}
 					else
 					{
@@ -296,7 +293,6 @@ class Admin extends CI_Controller {
 					'Name' => ucwords($row->name),
 					'Email' => $row->email,
 					'Username' => $row->username,
-					'AdminRole' => $row->admin_role,
 					'Action' => $action
 				);
 				

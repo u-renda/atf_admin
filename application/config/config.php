@@ -537,15 +537,11 @@ $config['link_member_delete'] = $config['base_url'].'member_delete';
 $config['link_member_lists'] = $config['base_url'].'member_lists';
 $config['link_member_update'] = $config['base_url'].'member_update';
 
-$config['link_member_love_create'] = $config['base_url'].'member_love_create';
 $config['link_member_love_delete'] = $config['base_url'].'member_love_delete';
 $config['link_member_love_lists'] = $config['base_url'].'member_love_lists';
-$config['link_member_love_update'] = $config['base_url'].'member_love_update';
 
-$config['link_member_wishlist_create'] = $config['base_url'].'member_wishlist_create';
 $config['link_member_wishlist_delete'] = $config['base_url'].'member_wishlist_delete';
 $config['link_member_wishlist_lists'] = $config['base_url'].'member_wishlist_lists';
-$config['link_member_wishlist_update'] = $config['base_url'].'member_wishlist_update';
 
 $config['link_movie_create'] = $config['base_url'].'movie_create';
 $config['link_movie_delete'] = $config['base_url'].'movie_delete';
@@ -583,11 +579,11 @@ $config['link_product_brand_lists'] = $config['base_url'].'product_brand_lists';
 $config['link_product_brand_update'] = $config['base_url'].'product_brand_update';
 
 $config['code_admin_role'] = array(
-    1 => 'administrator',
-    2 => 'operator'
+    1 => 'Administrator',
+    2 => 'Operator'
 );
 
 $config['code_member_gender'] = array(
-    0 => 'male',
-    1 => 'female'
+    0 => 'Male',
+    1 => 'Female'
 );

@@ -18,7 +18,7 @@
                             <span>Dashboard</span>
                         </a>
                     </li>
-                    <li class="nav-parent nav-grand">
+                    <li class="nav-parent nav-grand" id="grand-member">
                         <a>
                             <i class="fa fa-users" aria-hidden="true"></i>
                             <span>Member</span>
@@ -26,18 +26,6 @@
                         <ul class="nav nav-children">
                             <li class="list-item"><a href="<?php echo $this->config->item('link_member_lists'); ?>">Lists</a></li>
                             <li class="list-item"><a href="<?php echo $this->config->item('link_member_create'); ?>">Create New</a></li>
-                            <li class="nav-parent">
-                                <a><span>Member Love</span></a>
-                                <ul class="nav nav-children">
-                                    <li class="list-item"><a href="<?php echo $this->config->item('link_member_love_lists'); ?>">Lists</a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-parent">
-                                <a><span>Member Whistlist</span></a>
-                                <ul class="nav nav-children">
-                                    <li class="list-item"><a href="<?php echo $this->config->item('link_member_wishlist_lists'); ?>">Lists</a></li>
-                                </ul>
-                            </li>
                         </ul>
                     </li>
                     <li class="nav-parent nav-grand">

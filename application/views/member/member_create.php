@@ -20,7 +20,7 @@
                 <header class="panel-heading">
                     <h2 class="panel-title">Member - Create New</h2>
                 </header>
-                <form role="form" action="<?php echo $this->config->item('link_member_create'); ?>" method="post" id="member-create">
+                <form role="form" action="<?php echo $this->config->item('link_member_create'); ?>" method="post" id="form-member-create">
                     <div class="panel-body">
                         <div class="form-body">
                             <div class="fontred"><?php if ($create_error) { print_r($create_error); } ?></div>
@@ -58,7 +58,7 @@
                             <div class="form-group">
                                 <label>Birthday</label><span class="fontred"> *</span>
                                 <div class="input-group col-sm-12">
-                                    <input type="text" class="form-control" data-plugin-datepicker name="birthday" id="birthday" value="<?php echo set_value('birthday'); ?>">
+                                    <input type="text" class="form-control" data-plugin-datepicker name="birthday" id="birthday" value="<?php echo set_value('birthday'); ?>" data-date-format="dd-mm-yyyy">
                                     <span class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </span>

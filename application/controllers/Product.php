@@ -269,6 +269,8 @@ class Product extends CI_Controller {
 			{
 				$action = '<a title="View Detail" id="'.$row->id_product.'" class="view '.$row->id_product.'-view" href="#"><span class="glyphicon glyphicon-folder-open fontblue font16" aria-hidden="true"></span></a>&nbsp;
 							<a title="Edit" href="product_edit?id='.$row->id_product.'"><span class="glyphicon glyphicon-pencil fontorange font16" aria-hidden="true"></span></a>&nbsp;
+							<a title="Product Loved" href="member_love_lists?id_product='.$row->id_product.'"><i class="fa fa-heart fontpink font16"></i></a>&nbsp;
+							<a title="Wishlists" href="member_wishlist_lists?id_product='.$row->id_product.'"><i class="fa fa-list fontblack font16"></i></a>&nbsp;
 							<a title="Delete" id="'.$row->id_product.'" class="delete '.$row->id_product.'-delete" href="#"><span class="glyphicon glyphicon-remove fontred font16" aria-hidden="true"></span></a>';
 				
 				$matched = '';
