@@ -72,7 +72,7 @@ class Member extends CI_Controller {
 				
 				if ($query->code == 200)
 				{
-					redirect($this->config->item('link_member_lists').'?alert=success');
+					redirect($this->config->item('link_member_lists').'?alert=success&type=create');
 				}
 				else
 				{
@@ -145,7 +145,7 @@ class Member extends CI_Controller {
 			
 				if ($this->form_validation->run() == FALSE)
 				{
-					$data['error'] = validation_errors();
+					$data['create_error'] = validation_errors();
 				}
 				else
 				{
@@ -164,7 +164,7 @@ class Member extends CI_Controller {
 					
 					if ($query->code == 200)
 					{
-						redirect($this->config->item('link_member_lists'));
+						redirect($this->config->item('link_member_lists').'?alert=success&type=edit');
 					}
 					else
 					{
@@ -223,7 +223,7 @@ class Member extends CI_Controller {
 			
 			foreach ($get->result as $row)
 			{
-				$action = '<a title="Edit" href="member_edit?id='.$row->id_member.'"><span class="glyphicon glyphicon-pencil fontorange font16" aria-hidden="true"></span></a>&nbsp;
+				$action = '<a title="Edit" href="member_edit?id='.$row->id_member.'"><i class="fa fa-pencil fontorange font16"></i></a>&nbsp;
 							<a title="Product Loved" href="member_love_lists?id_member='.$row->id_member.'"><i class="fa fa-heart fontpink font16"></i></a>&nbsp;
 							<a title="Wishlists" href="member_wishlist_lists?id_member='.$row->id_member.'"><i class="fa fa-list fontblack font16"></i></a>&nbsp;
 							<a title="Delete" id="'.$row->id_member.'" class="delete '.$row->id_member.'-delete" href="#"><i class="fa fa-times fontred font18"></i></a>';
@@ -254,7 +254,7 @@ class Member extends CI_Controller {
 		
 		if ($this->input->get('alert') == 'success')
 		{
-			$data['alert'] = 'Create data success';
+			$data['alert'] = $this->input->get('type').' data success';
 		}
 		
 		$data['frame_content'] = 'member/member_lists';

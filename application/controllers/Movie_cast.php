@@ -80,7 +80,7 @@ class Movie_cast extends CI_Controller {
 				
 				if ($query->code == 200)
 				{
-					redirect($this->config->item('link_movie_cast_lists'));
+					redirect($this->config->item('link_movie_cast_lists').'?alert=success&type=create&id_movie='.$data['id_movie']);
 				}
 				else
 				{
@@ -105,24 +105,23 @@ class Movie_cast extends CI_Controller {
 		$data = array();
 		$data['id'] = $this->input->post('id');
 		$data['action'] = $this->input->post('action');
+		$data['grid'] = $this->input->post('grid');
 		
-		$get = $this->movie_cast_model->info(array('id_movie' => $data['id']));
+		$get = $this->movie_cast_model->info(array('id_movie_cast' => $data['id']));
 		
 		if ($get->code == 200)
 		{
-			if ($this->input->post('delete'))
+			if ($this->input->post('delete') == TRUE)
 			{
-				$param1 = array();
-				$param1['id_movie'] = $data['id'];
-				$query = $this->movie_cast_model->delete($param1);
+				$query = $this->movie_cast_model->delete(array('id_movie_cast' => $data['id']));
 				
-				if ($query)
+				if ($query->code == 200)
 				{
-					$response =  array('msg' => 'Delete data success', 'type' => 'success');
+					$response =  array('msg' => 'Delete data success', 'type' => 'success', 'title' => 'Movie Cast');
 				}
 				else
 				{
-					$response =  array('msg' => 'Delete data failed', 'type' => 'error');
+					$response =  array('msg' => 'Delete data failed', 'type' => 'error', 'title' => 'Movie Cast');
 				}
 				
 				echo json_encode($response);
@@ -144,56 +143,52 @@ class Movie_cast extends CI_Controller {
 		$data = array();
 		$data['id'] = $this->input->get_post('id');
 		
-		$info = $this->movie_cast_model->info(array('id_movie' => $data['id']));
+		$info = $this->movie_cast_model->info(array('id_movie_cast' => $data['id']));
 		
-		$data['movie'] = $info->result;
+		$data['movie_cast'] = $info->result;
 		
 		if ($info->code == 200)
 		{
 			if ($this->input->post('submit'))
 			{
 				$this->load->library('form_validation');
-				$this->form_validation->set_rules('title', 'title', 'required');
+				$this->form_validation->set_rules('actor', 'actor', 'required');
+				$this->form_validation->set_rules('cast', 'cast', 'required');
 				$this->form_validation->set_rules('photo', 'photo', 'callback_check_photo');
 			
 				if ($this->form_validation->run() == FALSE)
 				{
-					$data['error'] = validation_errors();
+					$data['create_error'] = validation_errors();
 				}
 				else
 				{
-					$photo = '-';
+					$param = array();
 					if (isset($_FILES['photo']))
 					{
-						if ($_FILES["photo"]["error"] == 0)
-						{
-							$name = md5(basename($_FILES["photo"]["name"]) . date('Y-m-d H:i:s'));
-							$imageFileType = strtolower(pathinfo($_FILES["photo"]["name"],PATHINFO_EXTENSION));
-							$photo = IMAGE_HOST . $name . '.' . $imageFileType;
-						}
+						$param['photo'] = check_all_photos($_FILES['photo']);
 					}
 					
-					$param1 = array();
-					$param1['id_movie'] = $data['id'];
-					$param1['title'] = $this->input->post('title');
-					$param1['photo'] = $photo;
-					$query = $this->movie_cast_model->update($param1);
+					$param['id_movie_cast'] = $data['id'];
+					$param['actor'] = $this->input->post('actor');
+					$param['cast'] = $this->input->post('cast');
+					$query = $this->movie_cast_model->update($param);
 					
 					if ($query->code == 200)
 					{
-						redirect($this->config->item('link_movie_cast_lists'));
+						$id_movie = $data['movie_cast']->movie->id_movie;
+						redirect($this->config->item('link_movie_cast_lists').'?alert=success&type=edit&id_movie='.$id_movie);
 					}
 					else
 					{
 						$data['create_error'] = $query->result;
-						$data['frame_content'] = 'movie/movie_cast_edit';
+						$data['frame_content'] = 'movie_cast/movie_cast_edit';
 						$this->load->view('templates/frame', $data);
 					}
 				}
 			}
 			
 			$data['create_error'] = '';
-			$data['frame_content'] = 'movie/movie_cast_edit';
+			$data['frame_content'] = 'movie_cast/movie_cast_edit';
 			$this->load->view('templates/frame', $data);
 		}
 		else
@@ -240,9 +235,9 @@ class Movie_cast extends CI_Controller {
 			
 			foreach ($get->result as $row)
 			{
-				$action = '<a title="View Detail" id="'.$row->id_movie_cast.'" class="view '.$row->id_movie_cast.'-view" href="#"><span class="glyphicon glyphicon-folder-open fontblue font16" aria-hidden="true"></span></a>&nbsp;
-							<a title="Edit" href="movie_cast_edit?id='.$row->id_movie_cast.'"><span class="glyphicon glyphicon-pencil fontorange font16" aria-hidden="true"></span></a>&nbsp;
-							<a title="Delete" id="'.$row->id_movie_cast.'" class="delete '.$row->id_movie_cast.'-delete" href="#"><span class="glyphicon glyphicon-remove fontred font16" aria-hidden="true"></span></a>';
+				$action = '<a title="Edit" href="movie_cast_edit?id='.$row->id_movie_cast.'"><i class="fa fa-pencil fontorange font16"></i></a>&nbsp;
+							<a title="Add Product" href="product_create?id_movie_cast='.$row->id_movie_cast.'"><i class="fa fa-plus text-success font16"></i></a>&nbsp;
+							<a title="Delete" id="'.$row->id_movie_cast.'" class="delete '.$row->id_movie_cast.'-delete" href="#"><i class="fa fa-times fontred font16"></i></a>';
 				
 				$photo = '<img src="'.$row->photo.'" width="150">';
 				$actor = ucwords($row->cast).' ('.ucwords($row->actor).')';
@@ -271,12 +266,18 @@ class Movie_cast extends CI_Controller {
 	{
 		$data = array();
 		$data['id_movie'] = $this->input->get_post('id_movie');
+		$data['alert'] = '';
 		
-		$query = $this->movie_model->lists(array());
+		$query = $this->movie_model->info(array('id_movie' => $data['id_movie']));
 		
 		if ($query->code == 200)
 		{
-			$data['movie_lists'] = $query->result;
+			$data['movie'] = $query->result;
+		}
+		
+		if ($this->input->get('alert') == 'success')
+		{
+			$data['alert'] = $this->input->get('type').' data success';
 		}
 		
 		$data['frame_content'] = 'movie_cast/movie_cast_lists';

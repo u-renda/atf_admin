@@ -14,7 +14,7 @@
     </header>
 	
 	<!-- start: page -->
-    <div class="row">
+    <div class="row" id="page_member_create">
         <div class="col-sm-12">
             <div class="panel panel-featured">
                 <header class="panel-heading">
@@ -71,7 +71,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <button type="submit" name="submit" value="Submit" class="btn btn-primary">
-                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Create New
+                                    <i class="fa fa-check"></i> Create New
                                 </button>
                                 <button type="reset" class="btn btn-default">Reset</button>
                             </div>

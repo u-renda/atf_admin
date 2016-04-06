@@ -13,13 +13,13 @@
         </div>
     </header>
     
-    <div class="row">
+    <div class="row" id="page_admin_create">
         <div class="col-sm-12">
             <div class="panel panel-featured">
                 <header class="panel-heading">
                     <h3 class="panel-title">Admin - Create New</h3>
                 </header>
-                <form role="form" action="<?php echo $this->config->item('link_admin_create'); ?>" method="post" enctype="multipart/form-data">
+                <form role="form" action="<?php echo $this->config->item('link_admin_create'); ?>" method="post" enctype="multipart/form-data" id="form-admin-create">
                     <div class="panel-body">
                         <div class="form-body col-sm-6">
                             <div class="fontred"><?php if ($create_error) { print_r($create_error); } ?></div>
@@ -77,7 +77,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <button type="submit" name="submit" value="Submit" class="btn btn-primary">
-                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Create New
+                                    <i class="fa fa-check"></i> Create New
                                 </button>
                                 <button type="reset" class="btn btn-default">Reset</button>
                             </div>

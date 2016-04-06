@@ -28,7 +28,7 @@
                             <li class="list-item"><a href="<?php echo $this->config->item('link_member_create'); ?>">Create New</a></li>
                         </ul>
                     </li>
-                    <li class="nav-parent nav-grand">
+                    <li class="nav-parent nav-grand" id="grand-movie">
                         <a>
                             <i class="fa fa-video-camera" aria-hidden="true"></i>
                             <span>Movie</span>
@@ -36,7 +36,7 @@
                         <ul class="nav nav-children">
                             <li class="list-item"><a href="<?php echo $this->config->item('link_movie_lists'); ?>">Lists</a></li>
                             <li class="list-item"><a href="<?php echo $this->config->item('link_movie_create'); ?>">Create New</a></li>
-                            <li class="nav-parent">
+                            <li class="nav-parent" id="parent-movie-cast">
                                 <a><span>Movie Cast</span></a>
                                 <ul class="nav nav-children">
                                     <li class="list-item"><a href="<?php echo $this->config->item('link_movie_cast_lists'); ?>">Lists</a></li>
@@ -44,22 +44,21 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-parent nav-grand">
+                    <li class="nav-parent nav-grand" id="grand-product">
                         <a>
                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                             <span>Product</span>
                         </a>
                         <ul class="nav nav-children">
                             <li class="list-item"><a href="<?php echo $this->config->item('link_product_lists'); ?>">Lists</a></li>
-                            <li class="list-item"><a href="<?php echo $this->config->item('link_product_create'); ?>">Create New</a></li>
-                            <li class="nav-parent">
+                            <li class="nav-parent" id="parent-product-brand">
                                 <a><span>Product Brand</span></a>
                                 <ul class="nav nav-children">
                                     <li class="list-item"><a href="<?php echo $this->config->item('link_product_brand_lists'); ?>">Lists</a></li>
                                     <li class="list-item"><a href="<?php echo $this->config->item('link_product_brand_create'); ?>">Create New</a></li>
                                 </ul>
                             </li>
-                            <li class="nav-parent">
+                            <li class="nav-parent" id="parent-product-category">
                                 <a><span>Product Category</span></a>
                                 <ul class="nav nav-children">
                                     <li class="list-item"><a href="<?php echo $this->config->item('link_product_category_lists'); ?>">Lists</a></li>
@@ -75,12 +74,13 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-parent">
+                    <li class="nav-parent nav-grand" id="grand-admin">
                         <a>
-                            <i class="fa fa-user-secret" aria-hidden="true"></i>
+                            <i class="fa fa-user-secret"></i>
                             <span>Admin</span>
                         </a>
                         <ul class="nav nav-children">
+                            <!--<li class="list-item"><a href="<?php echo $this->config->item('link_admin_profile'); ?>">Profile</a></li>-->
                             <li class="list-item"><a href="<?php echo $this->config->item('link_admin_lists'); ?>">Lists</a></li>
                             <li class="list-item"><a href="<?php echo $this->config->item('link_admin_create'); ?>">Create New</a></li>
                         </ul>

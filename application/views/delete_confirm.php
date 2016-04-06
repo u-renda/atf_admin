@@ -27,7 +27,6 @@ $(document).ready(function() {
                 $('#myModal').modal('hide');
                 $('#' + grid).data('kendoGrid').dataSource.read();
                 $('#' + grid).data('kendoGrid').refresh();
-                //noty({dismissQueue: true, force: true, layout: 'top', theme: 'defaultTheme', text: response.msg, type: response.type, timeout: 5000});
                 new PNotify({
                     title: response.title,
                     text: response.msg,

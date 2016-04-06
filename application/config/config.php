@@ -587,3 +587,8 @@ $config['code_member_gender'] = array(
     0 => 'Male',
     1 => 'Female'
 );
+
+$config['code_product_matched'] = array(
+    0 => 'No',
+    1 => 'Yes'
+);

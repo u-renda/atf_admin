@@ -58,6 +58,7 @@ $route['admin_delete'] = 'admin/admin_delete';
 $route['admin_edit'] = 'admin/admin_edit';
 $route['admin_get'] = 'admin/admin_get';
 $route['admin_lists'] = 'admin/admin_lists';
+$route['admin_view'] = 'admin/admin_view';
 
 $route['dashboard'] = 'home/dashboard';
 
@@ -95,6 +96,7 @@ $route['product_delete'] = 'product/product_delete';
 $route['product_edit'] = 'product/product_edit';
 $route['product_get'] = 'product/product_get';
 $route['product_lists'] = 'product/product_lists';
+$route['product_view'] = 'product/product_view';
 
 $route['product_brand_create'] = 'product_brand/product_brand_create';
 $route['product_brand_delete'] = 'product_brand/product_brand_delete';

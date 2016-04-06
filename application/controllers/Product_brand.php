@@ -32,7 +32,7 @@ class Product_brand extends CI_Controller {
 				
 				if ($query->code == 200)
 				{
-					redirect($this->config->item('link_product_brand_lists'));
+					redirect($this->config->item('link_product_brand_lists').'?alert=success&type=create');
 				}
 				else
 				{
@@ -50,24 +50,23 @@ class Product_brand extends CI_Controller {
 		$data = array();
 		$data['id'] = $this->input->post('id');
 		$data['action'] = $this->input->post('action');
+		$data['grid'] = $this->input->post('grid');
 		
 		$get = $this->product_brand_model->info(array('id_product_brand' => $data['id']));
 		
 		if ($get->code == 200)
 		{
-			if ($this->input->post('delete'))
+			if ($this->input->post('delete') == TRUE)
 			{
-				$param1 = array();
-				$param1['id_product_brand'] = $data['id'];
-				$query = $this->product_brand_model->delete($param1);
+				$query = $this->product_brand_model->delete(array('id_product_brand' => $data['id']));
 				
-				if ($query)
+				if ($query->code == 200)
 				{
-					$response =  array('msg' => 'Delete data success', 'type' => 'success');
+					$response =  array('msg' => 'Delete data success', 'type' => 'success', 'title' => 'Product Brand');
 				}
 				else
 				{
-					$response =  array('msg' => 'Delete data failed', 'type' => 'error');
+					$response =  array('msg' => 'Delete data failed', 'type' => 'error', 'title' => 'Product Brand');
 				}
 				
 				echo json_encode($response);
@@ -98,35 +97,22 @@ class Product_brand extends CI_Controller {
 			if ($this->input->post('submit'))
 			{
 				$this->load->library('form_validation');
-				$this->form_validation->set_rules('title', 'title', 'required');
-				$this->form_validation->set_rules('photo', 'photo', 'callback_check_photo');
+				$this->form_validation->set_rules('name', 'title', 'required');
 			
 				if ($this->form_validation->run() == FALSE)
 				{
-					$data['error'] = validation_errors();
+					$data['create_error'] = validation_errors();
 				}
 				else
 				{
-					$photo = '-';
-					if (isset($_FILES['photo']))
-					{
-						if ($_FILES["photo"]["error"] == 0)
-						{
-							$name = md5(basename($_FILES["photo"]["name"]) . date('Y-m-d H:i:s'));
-							$imageFileType = strtolower(pathinfo($_FILES["photo"]["name"],PATHINFO_EXTENSION));
-							$photo = IMAGE_HOST . $name . '.' . $imageFileType;
-						}
-					}
-					
 					$param1 = array();
 					$param1['id_product_brand'] = $data['id'];
-					$param1['title'] = $this->input->post('title');
-					$param1['photo'] = $photo;
+					$param1['name'] = $this->input->post('name');
 					$query = $this->product_brand_model->update($param1);
 					
 					if ($query->code == 200)
 					{
-						redirect($this->config->item('link_product_brand_lists'));
+						redirect($this->config->item('link_product_brand_lists').'?alert=success&type=edit');
 					}
 					else
 					{
@@ -184,9 +170,8 @@ class Product_brand extends CI_Controller {
 			
 			foreach ($get->result as $row)
 			{
-				$action = '<a title="View Detail" id="'.$row->id_product_brand.'" class="view '.$row->id_product_brand.'-view" href="#"><span class="glyphicon glyphicon-folder-open fontblue font16" aria-hidden="true"></span></a>&nbsp;
-							<a title="Edit" href="product_brand_edit?id='.$row->id_product_brand.'"><span class="glyphicon glyphicon-pencil fontorange font16" aria-hidden="true"></span></a>&nbsp;
-							<a title="Delete" id="'.$row->id_product_brand.'" class="delete '.$row->id_product_brand.'-delete" href="#"><span class="glyphicon glyphicon-remove fontred font16" aria-hidden="true"></span></a>';
+				$action = '<a title="Edit" href="product_brand_edit?id='.$row->id_product_brand.'"><i class="fa fa-pencil fontorange font16"></i></a>&nbsp;
+							<a title="Delete" id="'.$row->id_product_brand.'" class="delete '.$row->id_product_brand.'-delete" href="#"><i class="fa fa-times fontred font16"></i></a>';
 				
 				$entry = array(
 					'No' => $i,
@@ -205,6 +190,13 @@ class Product_brand extends CI_Controller {
 	function product_brand_lists()
 	{
 		$data = array();
+		$data['alert'] = '';
+		
+		if ($this->input->get('alert') == 'success')
+		{
+			$data['alert'] = $this->input->get('type').' data success';
+		}
+		
 		$data['frame_content'] = 'product_brand/product_brand_lists';
 		$this->load->view('templates/frame', $data);
 	}

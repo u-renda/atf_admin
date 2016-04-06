@@ -70,7 +70,7 @@ class Movie extends CI_Controller {
 				
 				if ($query->code == 200)
 				{
-					redirect($this->config->item('link_movie_lists'));
+					redirect($this->config->item('link_movie_lists').'?alert=success&type=create');
 				}
 				else
 				{
@@ -141,7 +141,7 @@ class Movie extends CI_Controller {
 			
 				if ($this->form_validation->run() == FALSE)
 				{
-					$data['error'] = validation_errors();
+					$data['create_error'] = validation_errors();
 				}
 				else
 				{
@@ -157,7 +157,7 @@ class Movie extends CI_Controller {
 					
 					if ($query->code == 200)
 					{
-						redirect($this->config->item('link_movie_lists'));
+						redirect($this->config->item('link_movie_lists').'?alert=success&type=edit');
 					}
 					else
 					{
@@ -215,10 +215,10 @@ class Movie extends CI_Controller {
 			
 			foreach ($get->result as $row)
 			{
-				$action = '<a title="View Cast" href="movie_cast_lists?id_movie='.$row->id_movie.'"><i class="fa fa-users fontblue font16" aria-hidden="true"></i></a>&nbsp;
-							<a title="Edit" href="movie_edit?id='.$row->id_movie.'"><span class="glyphicon glyphicon-pencil fontorange font16" aria-hidden="true"></span></a>&nbsp;
-							<a title="Delete" id="'.$row->id_movie.'" class="delete '.$row->id_movie.'-delete" href="#"><span class="glyphicon glyphicon-remove fontred font16" aria-hidden="true"></span></a>&nbsp
-							<a title="Add Cast" href="movie_cast_create?id_movie='.$row->id_movie.'"><i class="fa fa-plus text-success font16" aria-hidden="true"></i></a>';
+				$action = '<a title="Edit" href="movie_edit?id='.$row->id_movie.'"><i class="fa fa-pencil fontorange font16"></i></a>&nbsp;
+							<a title="View Cast" href="movie_cast_lists?id_movie='.$row->id_movie.'"><i class="fa fa-users fontblue font16"></i></a>&nbsp;
+							<a title="Add Cast" href="movie_cast_create?id_movie='.$row->id_movie.'"><i class="fa fa-plus text-success font16"></i></a>&nbsp;
+							<a title="Delete" id="'.$row->id_movie.'" class="delete '.$row->id_movie.'-delete" href="#"><i class="fa fa-times fontred font16"></i></a>';
 				
 				$photo = '<img src="'.$row->photo.'" width="150">';
 				
@@ -240,6 +240,13 @@ class Movie extends CI_Controller {
 	function movie_lists()
 	{
 		$data = array();
+		$data['alert'] = '';
+		
+		if ($this->input->get('alert') == 'success')
+		{
+			$data['alert'] = $this->input->get('type').' data success';
+		}
+		
 		$data['frame_content'] = 'movie/movie_lists';
 		$this->load->view('templates/frame', $data);
 	}

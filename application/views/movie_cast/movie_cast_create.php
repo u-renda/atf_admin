@@ -15,13 +15,21 @@
     </header>
 	
 	<!-- start: page -->
-    <div class="row">
+    <div class="row" id="page_movie_cast_create">
         <div class="col-sm-12">
             <div class="panel panel-featured">
                 <header class="panel-heading">
-                    <h2 class="panel-title">Movie Cast - Create New <?php echo '('.ucwords($movie->title).')'; ?></h2>
+                    <h2 class="panel-title">Movie Cast - Create New</h2>
+					<p class="panel-subtitle">
+						<?php
+						if (isset($movie) == TRUE)
+						{
+							echo 'Movie: '.ucwords($movie->title);
+						}
+						?>
+					</p>
                 </header>
-                <form role="form" action="<?php echo $this->config->item('link_movie_cast_create'); ?>" method="post" id="movie-cast-create" enctype="multipart/form-data">
+                <form role="form" action="<?php echo $this->config->item('link_movie_cast_create'); ?>" method="post" id="form-movie-cast-create" enctype="multipart/form-data">
                     <input type="hidden" name="id_movie" value="<?php echo $id_movie; ?>">
 					<div class="panel-body">
                         <div class="form-body">
@@ -66,7 +74,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <button type="submit" name="submit" value="Submit" class="btn btn-primary">
-                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Create New
+                                    <i class="fa fa-check"></i> Create New
                                 </button>
                                 <button type="reset" class="btn btn-default">Reset</button>
                             </div>

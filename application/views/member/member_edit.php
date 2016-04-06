@@ -20,7 +20,7 @@
                 <header class="panel-heading">
                     <h2 class="panel-title">Member - Edit</h2>
                 </header>
-                <form role="form" action="<?php echo $this->config->item('link_member_edit'); ?>" method="post" id="member-edit">
+                <form role="form" action="<?php echo $this->config->item('link_member_edit'); ?>" method="post" id="form-member-edit">
                     <input type="hidden" name="id" value="<?php echo $id; ?>">
                     <input type="hidden" name="email_default" value="<?php echo $member->email; ?>">
                     <input type="hidden" name="name_default" value="<?php echo $member->name; ?>">
@@ -75,7 +75,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <button type="submit" name="submit" value="Submit" class="btn btn-primary">
-                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Create New
+                                    <i class="fa fa-check"></i> Update
                                 </button>
                                 <a href="<?php echo $this->config->item('link_member_lists'); ?>" type="button" class="btn btn-default">Back</a>
                             </div>

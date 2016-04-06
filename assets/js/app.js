@@ -20,16 +20,39 @@ var newPathname = winOrigin + "/" + winPath[1] + "/";
         }
     });
 	
-	if (document.getElementById('page_member_love_lists') != null) {
+	if (document.getElementById('page_member_love_lists') != null ||
+		document.getElementById('page_member_wishlist_lists') != null ||
+		document.getElementById('page_member_edit') != null) {
 		$('li#grand-member').addClass('nav-active');
 	}
 	
-	if (document.getElementById('page_member_wishlist_lists') != null) {
-		$('li#grand-member').addClass('nav-active');
+	if (document.getElementById('page_movie_edit') != null) {
+		$('li#grand-movie').addClass('nav-active');
 	}
 	
-	if (document.getElementById('page_member_edit') != null) {
-		$('li#grand-member').addClass('nav-active');
+	if (document.getElementById('page_movie_cast_create') != null ||
+		document.getElementById('page_movie_cast_edit') != null) {
+		$('li#grand-movie').addClass('nav-active nav-expanded');
+		$('li#parent-movie-cast').addClass('nav-active');
+	}
+	
+	if (document.getElementById('page_product_category_edit') != null) {
+		$('li#grand-product').addClass('nav-active nav-expanded');
+		$('li#parent-product-category').addClass('nav-active');
+	}
+	
+	if (document.getElementById('page_product_brand_edit') != null) {
+		$('li#grand-product').addClass('nav-active nav-expanded');
+		$('li#parent-product-brand').addClass('nav-active');
+	}
+	
+	if (document.getElementById('page_product_create') != null ||
+		document.getElementById('page_product_edit') != null) {
+		$('li#grand-product').addClass('nav-active');
+	}
+	
+	if (document.getElementById('page_admin_edit') != null) {
+		$('li#grand-admin').addClass('nav-active');
 	}
 
 }).apply(this, [jQuery]);

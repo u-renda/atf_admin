@@ -14,7 +14,7 @@
     </header>
 
     <!-- start: page -->
-    <div class="row">
+    <div class="row" id="page_dashboard">
         <div class="col-md-6 col-lg-12 col-xl-6">
             <div class="row">
                 <!-- Total Member -->

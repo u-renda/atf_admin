@@ -15,24 +15,23 @@ class Member_love extends CI_Controller {
 		$data = array();
 		$data['id'] = $this->input->post('id');
 		$data['action'] = $this->input->post('action');
+		$data['grid'] = $this->input->post('grid');
 		
 		$get = $this->member_love_model->info(array('id_member_love' => $data['id']));
 		
 		if ($get->code == 200)
 		{
-			if ($this->input->post('delete'))
+			if ($this->input->post('delete') == TRUE)
 			{
-				$param1 = array();
-				$param1['id_member_love'] = $data['id'];
-				$query = $this->member_love_model->delete($param1);
+				$query = $this->member_love_model->delete(array('id_member_love' => $data['id']));
 				
-				if ($query)
+				if ($query->code == 200)
 				{
-					$response =  array('msg' => 'Delete data success', 'type' => 'success');
+					$response =  array('msg' => 'Delete data success', 'type' => 'success', 'title' => 'Member Love');
 				}
 				else
 				{
-					$response =  array('msg' => 'Delete data failed', 'type' => 'error');
+					$response =  array('msg' => 'Delete data failed', 'type' => 'error', 'title' => 'Member Love');
 				}
 				
 				echo json_encode($response);
@@ -88,7 +87,7 @@ class Member_love extends CI_Controller {
 			
 			foreach ($get->result as $row)
 			{
-				$action = '<a title="Delete" id="'.$row->id_member_love.'" class="delete '.$row->id_member_love.'-delete" href="#"><span class="glyphicon glyphicon-remove fontred font16" aria-hidden="true"></span></a>';
+				$action = '<a title="Delete" id="'.$row->id_member_love.'" class="delete '.$row->id_member_love.'-delete" href="#"><i class="fa fa-times fontred font16"></i></a>';
 				
 				$entry = array(
 					'No' => $i,

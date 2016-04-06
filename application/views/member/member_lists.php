@@ -23,7 +23,7 @@
 				<div class="panel-body">
 					<?php if ($alert == TRUE) { ?>
 					<div class="alert alert-success">
-						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+						<button type="button" class="close" data-dismiss="alert">
 							<i class="fa fa-times"></i>
 						</button>
 						<strong><?php echo $alert; ?></strong>

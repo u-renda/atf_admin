@@ -13,13 +13,13 @@
         </div>
     </header>
     
-    <div class="row">
+    <div class="row" id="page_admin_edit">
         <div class="col-sm-12">
             <div class="panel panel-featured">
                 <header class="panel-heading">
                     <h3 class="panel-title">Admin - Edit</h3>
                 </header>
-                <form role="form" action="<?php echo $this->config->item('link_admin_edit'); ?>" method="post" enctype="multipart/form-data">
+                <form role="form" action="<?php echo $this->config->item('link_admin_edit'); ?>" method="post" enctype="multipart/form-data" id="form-admin-edit">
                     <input type="hidden" name="id" value="<?php echo $id; ?>">
                     <input type="hidden" name="username_default" value="<?php echo $admin->username; ?>">
                     <input type="hidden" name="email_default" value="<?php echo $admin->email; ?>">
@@ -83,9 +83,9 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <button type="submit" name="submit" value="Submit" class="btn btn-primary">
-                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Create New
+                                    <i class="fa fa-check"></i> Update
                                 </button>
-                                <button type="reset" class="btn btn-default">Reset</button>
+                                <a href="<?php echo $this->config->item('link_admin_lists'); ?>" type="button" class="btn btn-default">Back</a>
                             </div>
                         </div>
                     </footer>

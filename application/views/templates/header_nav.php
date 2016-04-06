@@ -14,24 +14,28 @@
         <div id="userbox" class="userbox">
             <a href="#" data-toggle="dropdown">
                 <figure class="profile-picture">
-                    <img src="<?php echo base_url('assets/images').'/user_default.jpg'; ?>" alt="Joseph Doe" class="img-circle" data-lock-picture="<?php echo base_url('assets/images').'/user_default.jpg'; ?>" />
+                    <?php if ($this->session->userdata('photo') == '-') { ?>
+                        <img src="<?php echo base_url('assets/images').'/user_default.jpg'; ?>" alt="<?php echo $this->session->userdata('name'); ?>" class="img-circle" data-lock-picture="<?php echo base_url('assets/images').'/user_default.jpg'; ?>" />
+                    <?php } else { ?>
+                        <img src="<?php echo $this->session->userdata('photo'); ?>" alt="<?php echo $this->session->userdata('name'); ?>" class="img-circle" data-lock-picture="<?php echo $this->session->userdata('photo'); ?>" />
+                    <?php } ?>
+                    
                 </figure>
-                <div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@okler.com">
+                <div class="profile-info" data-lock-name="<?php echo $this->session->userdata('name'); ?>" data-lock-email="<?php echo $this->session->userdata('email'); ?>">
                     <span class="name"><?php echo ucwords($this->session->userdata('name')); ?></span>
                     <span class="role"><?php echo $this->session->userdata('admin_role'); ?></span>
                 </div>
-
                 <i class="fa custom-caret"></i>
             </a>
 
             <div class="dropdown-menu">
                 <ul class="list-unstyled">
                     <li class="divider"></li>
+                    <!--<li>-->
+                    <!--    <a role="menuitem" tabindex="-1" href="<?php echo $this->config->item('link_admin_profile'); ?>"><i class="fa fa-user"></i> My Profile </a>-->
+                    <!--</li>-->
                     <li>
-                        <a role="menuitem" tabindex="-1" href="<?php echo $this->config->item('link_admin_profile'); ?>"><i class="fa fa-user"></i> My Profile</a>
-                    </li>
-                    <li>
-                        <a role="menuitem" tabindex="-1" href="<?php echo $this->config->item('link_logout'); ?>"><i class="fa fa-power-off"></i> Logout</a>
+                        <a role="menuitem" tabindex="-1" href="<?php echo $this->config->item('link_logout'); ?>"><i class="fa fa-power-off"></i> Logout </a>
                     </li>
                 </ul>
             </div>

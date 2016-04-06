@@ -108,19 +108,17 @@ $(function () {
                 width: 40,
                 sortable: false
             }, {
-                field: "Name",
-                template: "#= data.Name #"
+                field: "ProductName",
+                title: "Product Name",
+                template: "#= data.ProductName #",
+                width: 300
             }, {
-                field: "Price"
-            },{
-                field: "MovieTitle",
-                title: "Movie Title"
-            }, {
-                field: "ProductBrand",
-                title: "Product Brand"
+                field: "Price",
+                width: 100
             }, {
                 field: "Photo",
-                template: "#= data.Photo #"
+                template: "#= data.Photo #",
+                width: 200
             }, {
                 field: "Action",
                 template: "#= data.Action #",

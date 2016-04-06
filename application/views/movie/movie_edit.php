@@ -14,13 +14,13 @@
     </header>
 	
 	<!-- start: page -->
-    <div class="row">
+    <div class="row" id="page_movie_edit">
         <div class="col-sm-12">
             <div class="panel panel-featured">
                 <header class="panel-heading">
-                    <h2 class="panel-title">Movie - Edit <?php echo '('.ucwords($movie->title).')' ?></h2>
+                    <h2 class="panel-title">Movie - Edit</h2>
                 </header>
-                <form role="form" action="<?php echo $this->config->item('link_movie_edit'); ?>" method="post" id="movie-edit" enctype="multipart/form-data">
+                <form role="form" action="<?php echo $this->config->item('link_movie_edit'); ?>" method="post" id="form-movie-edit" enctype="multipart/form-data">
                     <input type="hidden" name="id" value="<?php echo $id; ?>">
                     <div class="panel-body">
                         <div class="form-body col-sm-6">
@@ -59,7 +59,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <button type="submit" name="submit" value="Submit" class="btn btn-primary">
-                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Create New
+                                    <i class="fa fa-check"></i> Update
                                 </button>
                                 <a type="button" class="btn btn-default" href="<?php echo $this->config->item('link_movie_lists'); ?>">Back</a>
                             </div>

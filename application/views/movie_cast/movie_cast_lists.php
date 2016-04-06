@@ -15,30 +15,32 @@
     </header>
 	
 	<!-- start: page -->
-	<div class="row">
+	<div class="row" id="page_movie_cast_lists">
 		<div class="col-sm-12">
 			<div class="panel panel-featured">
 				<header class="panel-heading">
 					<h3 class="panel-title">Movie Cast - Lists</h3>
+					<p class="panel-subtitle">
+						<?php
+						if (isset($movie) == TRUE)
+						{
+							echo 'Movie: '.ucwords($movie->title);
+						}
+						?>
+					</p>
 				</header>
 				<div class="panel-body">
-					<form class="row marginbottom15" id="form-movie-cast-lists">
-						<div class="form-group col-sm-3">
-							<select class="form-control" name="id_movie" id="id_movie">
-								<option value="">-- All Movie --</option>
-								<?php
-								foreach ($movie_lists as $row)
-								{
-									echo '<option value="'.$row->id_movie.'"';
-									if ($row->id_movie == $id_movie)
-									{
-										echo 'selected="selected"';
-									}
-									echo '>'.ucwords($row->title).'</option>';
-								} ?>
-							</select>
-						</div>
-						<input type="submit" class="btn btn-primary" value="Submit" />
+					<?php if ($alert == TRUE) { ?>
+					<div class="alert alert-success">
+						<button type="button" class="close" data-dismiss="alert">
+							<i class="fa fa-times"></i>
+						</button>
+						<strong><?php echo $alert; ?></strong>
+					</div>
+					<div class="clearfix"></div>
+					<?php } ?>
+					<form>
+						<input type="hidden" name="id_movie" id="id_movie" value="<?php echo $id_movie; ?>">
 					</form>
 					<div class="clearfix"></div>
 					<div id="grid_movie_cast_lists"></div>

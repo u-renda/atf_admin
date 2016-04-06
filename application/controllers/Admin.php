@@ -98,7 +98,7 @@ class Admin extends CI_Controller {
 		if ($this->input->post('submit'))
 		{
 			$this->load->library('form_validation');
-			$this->form_validation->set_rules('username', 'username', 'required');
+			$this->form_validation->set_rules('username', 'username', 'required|callback_check_username');
 			$this->form_validation->set_rules('password', 'password', 'required');
 			$this->form_validation->set_rules('name', 'name', 'required|callback_check_name');
 			$this->form_validation->set_rules('email', 'email', 'required|valid_email|callback_check_email');
@@ -110,13 +110,15 @@ class Admin extends CI_Controller {
 			}
 			else
 			{
+				$photo = '-';
 				if (isset($_FILES['photo']))
 				{
-					$photo = check_all_photos($_FILES['photo']);
-				}
-				else
-				{
-					$photo = '-';
+					if ($_FILES["photo"]["error"] == 0)
+					{
+						$name = md5(basename($_FILES["photo"]["name"]) . date('Y-m-d H:i:s'));
+						$imageFileType = strtolower(pathinfo($_FILES["photo"]["name"],PATHINFO_EXTENSION));
+						$photo = IMAGE_HOST . $name . '.' . $imageFileType;
+					}
 				}
 				
 				$param = array();
@@ -148,24 +150,23 @@ class Admin extends CI_Controller {
 		$data = array();
 		$data['id'] = $this->input->post('id');
 		$data['action'] = $this->input->post('action');
+		$data['grid'] = $this->input->post('grid');
 		
 		$get = $this->admin_model->info(array('id_admin' => $data['id']));
 		
 		if ($get->code == 200)
 		{
-			if ($this->input->post('delete'))
+			if ($this->input->post('delete') == TRUE)
 			{
-				$param1 = array();
-				$param1['id_admin'] = $data['id'];
-				$query = $this->admin_model->delete($param1);
+				$query = $this->admin_model->delete(array('id_admin' => $data['id']));
 				
-				if ($query)
+				if ($query->code == 200)
 				{
-					$response =  array('msg' => 'Delete data success', 'type' => 'success');
+					$response =  array('msg' => 'Delete data success', 'type' => 'success', 'title' => 'Admin');
 				}
 				else
 				{
-					$response =  array('msg' => 'Delete data failed', 'type' => 'error');
+					$response =  array('msg' => 'Delete data failed', 'type' => 'error', 'title' => 'Admin');
 				}
 				
 				echo json_encode($response);
@@ -203,7 +204,7 @@ class Admin extends CI_Controller {
 				
 				if ($this->form_validation->run() == FALSE)
 				{
-					$data['error'] = validation_errors();
+					$data['create_error'] = validation_errors();
 				}
 				else
 				{
@@ -226,7 +227,7 @@ class Admin extends CI_Controller {
 					
 					if ($query->code == 200)
 					{
-						redirect($this->config->item('link_admin_lists'));
+						redirect($this->config->item('link_admin_lists').'?alert=success&type=edit');
 					}
 					else
 					{
@@ -284,9 +285,9 @@ class Admin extends CI_Controller {
 			
 			foreach ($get->result as $row)
 			{
-				$action = '<a title="View Detail" id="'.$row->id_admin.'" class="view '.$row->id_admin.'-view" href="#"><span class="glyphicon glyphicon-folder-open fontblue font16" aria-hidden="true"></span></a>&nbsp;
-							<a title="Edit" href="admin_edit?id='.$row->id_admin.'"><span class="glyphicon glyphicon-pencil fontorange font16" aria-hidden="true"></span></a>&nbsp;
-							<a title="Delete" id="'.$row->id_admin.'" class="delete '.$row->id_admin.'-delete" href="#"><span class="glyphicon glyphicon-remove fontred font16" aria-hidden="true"></span></a>';
+				$action = '<a title="View Detail" id="'.$row->id_admin.'" class="view '.$row->id_admin.'-view" href="#"><i class="fa fa-folder-open fontblue font16"></i></a>&nbsp;
+							<a title="Edit" href="admin_edit?id='.$row->id_admin.'"><i class="fa fa-pencil fontorange font16"></i></a>&nbsp;
+							<a title="Delete" id="'.$row->id_admin.'" class="delete '.$row->id_admin.'-delete" href="#"><i class="fa fa-times fontred font16"></i></a>';
 				
 				$entry = array(
 					'No' => $i,
@@ -307,7 +308,33 @@ class Admin extends CI_Controller {
 	function admin_lists()
 	{
 		$data = array();
+		$data['alert'] = '';
+		
+		if ($this->input->get('alert') == 'success')
+		{
+			$data['alert'] = $this->input->get('type').' data success';
+		}
+		
 		$data['frame_content'] = 'admin/admin_lists';
 		$this->load->view('templates/frame', $data);
+	}
+	
+	function admin_view()
+	{
+		$data = array();
+		$data['id'] = $this->input->post('id');
+		$data['action'] = $this->input->post('action');
+		
+		$get = $this->admin_model->info(array('id_admin' => $data['id']));
+		
+		if ($get->code == 200)
+		{
+			$data['result'] = $get->result;
+			$this->load->view('admin/admin_view', $data);
+		}
+		else
+		{
+			echo "Data Not Found";
+		}
 	}
 }
